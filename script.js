@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name TDK
+// @name RicZin7 💤
 // @namespace https://viayoo.com/rlybzf
 // @version 15.4
 // @description Proteção + Mídia Liberada + Player Lite + Links Vermelhos e Limpos + Controles
