@@ -6,8 +6,8 @@
 // @match https://*/*
 // @run-at document-end
 // @grant none
-// @updateURL https://raw.githubusercontent.com/RICZIN2008/Script/main/script.js
-// @downloadURL https://raw.githubusercontent.com/RICZIN2008/Script/main/script.js
+// @updateURL https://raw.githubusercontent.com/RICZIN2008/addblock/refs/heads/main/script.js
+// @downloadURL https://raw.githubusercontent.com/RICZIN2008/addblock/refs/heads/main/script.js
 // ==/UserScript==
 
 (function () {
