@@ -1,17 +1,18 @@
 // ==UserScript==
-// @name RicZin7 💤
-// @namespace https://viayoo.com/rlybzf
-// @version 15.4
-// @description Proteção + Mídia Liberada + Player Lite + Links Vermelhos e Limpos + Controles
-// @match https://*/*
-// @run-at document-end
-// @grant none
+// @name TDK TroopDark Full v3.2
+// @namespace https://viayoo.com/ah1jk1
+// @version 3.2
+// @description Segurança Forçada + Info Completa + Controles + Tema + MÍDIA LIBERADA
+// @author TroopDark
 // @updateURL https://raw.githubusercontent.com/RICZIN2008/addblock/refs/heads/main/script.js
 // @downloadURL https://raw.githubusercontent.com/RICZIN2008/addblock/refs/heads/main/script.js
+// @run-at document-end
+// @match https://*/*
+// @grant none
 // ==/UserScript==
 
-(function () {
-    "use strict";
+(function() {
+    'use strict';
 
     /* BOTÃO PRINCIPAL ARRASTÁVEL */
     const btn = document.createElement("div");
@@ -24,7 +25,7 @@
     });
     document.body.appendChild(btn);
 
-    // Arrastar PC + Mobile
+    // Arrastar + Clique
     let isDown = false, startX, startY, moved = false;
     const startDrag = (e) => {
         isDown = true; moved = false;
@@ -62,14 +63,7 @@
     });
 
     menu.innerHTML = `
-        <h3 style="text-align:center;color:red;margin:0 0 10px 0">TDK MENU v15.4</h3>
-
-        <label style="font-size:11px;color:red;font-weight:bold">🔎 CONSULTAS</label>
-        <div style="border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 10px;">
-            <button id="cpfBtn">CONSULTAR CPF</button>
-            <button id="ipBtn">IP</button>
-            <button id="operadoraBtn">CPF OPERADORA</button>
-        </div>
+        <h3 style="text-align:center;color:red;margin:0 0 10px 0">TDK MENU v3.2</h3>
 
         <label style="font-size:11px;color:red;font-weight:bold">🎨 APARÊNCIA</label>
         <select id="temaSelect" style="width:100%;padding:5px;margin-bottom:10px;background:#222;color:#fff;border:1px solid red">
@@ -104,19 +98,13 @@
     `;
     document.body.appendChild(menu);
 
-    /* ESTILO PADRÃO BOTÕES */
-    menu.querySelectorAll("button").forEach(b => {
-        Object.assign(b.style, {
-            width: "100%", padding: "10px", background: "#222", color: "#fff",
-            border: "1px solid red", borderRadius: "6px", cursor: "pointer", fontWeight: "bold", marginBottom: "5px"
-        });
-    });
+    /* ABRIR/FECHAR */
+    btn.addEventListener('click', () => { if(!moved) menu.style.display = menu.style.display === "none"? "block" : "none"; });
+    document.getElementById("closeMenu").onclick = () => menu.style.display = "none";
 
     /* CONTROLES */
-    btn.addEventListener('click', () => { if(!moved) menu.style.display = menu.style.display === "none"? "block" : "none"; });
     document.getElementById("sizeControl").oninput = (e) => { btn.style.width = e.target.value + "px"; btn.style.height = e.target.value + "px"; };
     document.getElementById("opacityControl").oninput = (e) => { btn.style.opacity = e.target.value; };
-    document.getElementById("closeMenu").onclick = () => menu.style.display = "none";
     document.getElementById("temaSelect").onchange = (e) => {
         const cor = e.target.value;
         btn.style.background = cor; btn.style.boxShadow = `0 0 10px ${cor}`;
@@ -144,6 +132,7 @@
         let bateria = "N/A";
         try { const res = await fetch('https://ipapi.co/json/'); if(res.ok) ipData = await res.json(); } catch(e){}
         try { const battery = await navigator.getBattery(); bateria = `${(battery.level * 100).toFixed(0)}% ${battery.charging?'(🔌)':'(🔋)'}`; } catch(e){}
+
         display.innerHTML = `
             <b style="color:red">🌐 IP:</b> ${ipData.ip}<br>
             <b style="color:red">🏙 ESTADO:</b> ${ipData.region}<br>
@@ -160,33 +149,18 @@
     document.getElementById("infoBtn").onclick = () => { infoWin.style.display = "block"; loadFullData(); };
     document.getElementById("closeInfo").onclick = () => infoWin.style.display = "none";
 
-    /* IFRAME CONSULTAS */
-    const siteBox = document.createElement("div");
-    Object.assign(siteBox.style, {
-        position: "fixed", top: "5%", left: "5%", width: "90%", height: "90%",
-        background: "#fff", border: "2px solid red", borderRadius: "10px", display: "none", zIndex: "9999"
-    });
-    siteBox.innerHTML = `<button id="closeSite" style="position:absolute;top:10px;right:10px;background:red;color:white;border:none;padding:10px;cursor:pointer;z-index:10000001">FECHAR</button>
-                         <iframe id="siteFrame" style="width:100%;height:100%;border:none;background:white"></iframe>`;
-    document.body.appendChild(siteBox);
-
-    document.getElementById("cpfBtn").onclick = () => { document.getElementById("siteFrame").src = "https://servicos.receita.fazenda.gov.br/Servicos/CPF/ConsultaSituacao/ConsultaPublica.asp"; siteBox.style.display = "block"; };
-    document.getElementById("ipBtn").onclick = () => { document.getElementById("siteFrame").src = "https://riczin2008.github.io/IP/"; siteBox.style.display = "block"; };
-    document.getElementById("operadoraBtn").onclick = () => { document.getElementById("siteFrame").src = "https://infopessoas.com/"; siteBox.style.display = "block"; };
-    document.getElementById("closeSite").onclick = () => { siteBox.style.display = "none"; document.getElementById("siteFrame").src = ""; };
-
-    /* SEGURANÇA FORÇADA - 12 CAMADAS v15.4 */
+    /* SEGURANÇA FORÇADA - 12 CAMADAS v3.2 CORRIGIDA */
     setInterval(() => document.querySelectorAll('a[target="_blank"]').forEach(a => a.rel = "noopener noreferrer"), 2000);
 
-    // ANTI-OVERLAY CORRIGIDO: Não mexe em video, iframe, youtube, tiktok
+    // CORREÇÃO: NÃO MEXER EM IFRAME E VIDEO
     setInterval(() => {
         document.querySelectorAll('div, iframe, ins, aside').forEach(el => {
-            if([btn,menu,infoWin,siteBox].includes(el) || el.closest('#sysinfo')) return;
+            if([btn,menu,infoWin].includes(el) || el.closest('#sysinfo')) return;
             if(el.tagName === 'IFRAME' || el.tagName === 'VIDEO') return; // LIBERAR MÍDIA
             if(el.closest('iframe') || el.closest('video')) return; // LIBERAR PLAYER
             const s = window.getComputedStyle(el);
             if(parseInt(s.zIndex) > 500 && parseFloat(s.opacity) < 0.1) el.style.pointerEvents = "none";
-            if(s.position === "fixed" && parseInt(s.zIndex) > 1000 &&!el.closest('[id*="player"]')) el.remove();
+            if(s.position === "fixed" && parseInt(s.zIndex) > 1000) el.remove();
         });
     }, 1500);
 
@@ -200,21 +174,22 @@
     if(window.top!== window.self) window.top.location = window.self.location;
     document.addEventListener('contextmenu', e => e.preventDefault());
     document.addEventListener('keydown', e => { if(e.ctrlKey && ['u','s','i','c'].includes(e.key.toLowerCase())) e.preventDefault(); });
+
+    // CORREÇÃO: NÃO REMOVER BANNER DENTRO DE VIDEO/IFRAME
     setInterval(() => {
         document.querySelectorAll('div[class*="banner"], div[class*="overlay"], div[id*="pop"],.adsbygoogle').forEach(el => {
-           if(![btn,menu,infoWin,siteBox].includes(el) &&!el.closest('iframe') &&!el.closest('video')) el.remove();
+           if(![btn,menu,infoWin].includes(el) &&!el.closest('iframe') &&!el.closest('video')) el.remove();
         });
     }, 2000);
     console.clear();
 
-    /* CSS FIXO - LIBERADO PARA MÍDIA */
+    /* CSS FIXO - LIBERADO VIDEO E IFRAME */
     const style = document.createElement("style");
     style.innerHTML = `
         a,a:visited{color:red!important}
-        img{max-width:50px!important;max-height:50px!important;object-fit:contain!important}
-        /* LIBERAR VÍDEOS */
-        video, iframe, [id*="player"], [class*="player"] { max-width:100%!important; max-height:100%!important; width:auto!important; height:auto!important; visibility:visible!important; }
-      .VwiC3b,.IsZvec,.b_caption p{display:none!important}
+        img{max-width:50px!important;max-height:50px!important}
+        /* LIBERAR PLAYER */
+        video, iframe { max-width: 100%!important; max-height: 100%!important; width: auto!important; height: auto!important; visibility: visible!important; }
     `;
     document.head.appendChild(style);
 
