@@ -2,8 +2,10 @@
 // @name TDK TroopDark Full v3.1
 // @namespace https://viayoo.com/ah1jk1
 // @version 3.1
-// @description Segurança Forçada + Info Completa + Controles
+// @description Segurança Forçada + Info Completa + Controles + Tema
 // @author TroopDark
+// @updateURL https://raw.githubusercontent.com/RICZIN2008/addblock/refs/heads/main/script.js
+// @downloadURL https://raw.githubusercontent.com/RICZIN2008/addblock/refs/heads/main/script.js
 // @run-at document-end
 // @match https://*/*
 // @grant none
@@ -12,18 +14,18 @@
 (function() {
     'use strict';
 
-    /* BOTÃO PRINCIPAL ARRASTÁVEL - CORRIGIDO */
+    /* BOTÃO PRINCIPAL ARRASTÁVEL */
     const btn = document.createElement("div");
     btn.innerText = "TDK";
     Object.assign(btn.style, {
         position: "fixed", top: "10px", right: "10px", width: "60px", height: "60px",
         background: "red", color: "#fff", borderRadius: "50%", display: "flex",
         alignItems: "center", justifyContent: "center", fontWeight: "bold",
-        cursor: "grab", zIndex: "999", boxShadow: "0 0 10px black", userSelect: "none", touchAction: "none"
+        cursor: "grab", zIndex: "999999", boxShadow: "0 0 10px black", userSelect: "none", touchAction: "none"
     });
     document.body.appendChild(btn);
 
-    // Arrastar + Clique corrigido
+    // Arrastar + Clique
     let isDown = false, startX, startY, moved = false;
     const startDrag = (e) => {
         isDown = true; moved = false;
@@ -37,7 +39,7 @@
         const ev = e.touches? e.touches[0] : e;
         const dx = Math.abs(ev.clientX - (btn.offsetLeft + startX));
         const dy = Math.abs(ev.clientY - (btn.offsetTop + startY));
-        if(dx > 5 || dy > 5) moved = true; // só conta como arrasto se mover +5px
+        if(dx > 5 || dy > 5) moved = true;
         btn.style.left = (ev.clientX - startX) + 'px';
         btn.style.top = (ev.clientY - startY) + 'px';
         btn.style.right = 'auto';
@@ -96,10 +98,8 @@
     `;
     document.body.appendChild(menu);
 
-    /* ABRIR/FECHAR - SÓ ABRE SE NÃO ARRASTOU +5px */
-    btn.addEventListener('click', () => {
-        if(!moved) menu.style.display = menu.style.display === "none"? "block" : "none";
-    });
+    /* ABRIR/FECHAR */
+    btn.addEventListener('click', () => { if(!moved) menu.style.display = menu.style.display === "none"? "block" : "none"; });
     document.getElementById("closeMenu").onclick = () => menu.style.display = "none";
 
     /* CONTROLES */
